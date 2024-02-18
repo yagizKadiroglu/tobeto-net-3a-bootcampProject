@@ -43,6 +43,11 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletedDate");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -81,7 +86,9 @@ namespace DataAccess.Migrations
 
                     b.ToTable("Users", (string)null);
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Entities.Applicant", b =>
@@ -93,7 +100,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("About");
 
-                    b.ToTable("Applicants", (string)null);
+                    b.HasDiscriminator().HasValue("Applicant");
                 });
 
             modelBuilder.Entity("Entities.Employee", b =>
@@ -105,7 +112,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Position");
 
-                    b.ToTable("Employees", (string)null);
+                    b.HasDiscriminator().HasValue("Employee");
                 });
 
             modelBuilder.Entity("Entities.Instructor", b =>
@@ -117,34 +124,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("CompanyName");
 
-                    b.ToTable("Instructors", (string)null);
-                });
-
-            modelBuilder.Entity("Entities.Applicant", b =>
-                {
-                    b.HasOne("Entities.User", null)
-                        .WithOne()
-                        .HasForeignKey("Entities.Applicant", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entities.Employee", b =>
-                {
-                    b.HasOne("Entities.User", null)
-                        .WithOne()
-                        .HasForeignKey("Entities.Employee", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entities.Instructor", b =>
-                {
-                    b.HasOne("Entities.User", null)
-                        .WithOne()
-                        .HasForeignKey("Entities.Instructor", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasDiscriminator().HasValue("Instructor");
                 });
 #pragma warning restore 612, 618
         }
