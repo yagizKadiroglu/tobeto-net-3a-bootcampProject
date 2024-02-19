@@ -18,33 +18,33 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public CreateEmployeeResponse Add(CreateEmployeeRequest request)
+        public async Task<CreateEmployeeResponse> AddAsync(CreateEmployeeRequest request)
         {
-            return _employeeService.Add(request);
+            return await _employeeService.AddAsync(request);
         }
 
         [HttpPut]
-        public UpdateEmployeeResponse Update(UpdateEmployeeRequest request)
+        public async Task<UpdateEmployeeResponse> UpdateAsync(UpdateEmployeeRequest request)
         {
-            return _employeeService.Update(request);
+            return await _employeeService.UpdateAsync(request);
         }
 
         [HttpDelete]
-        public DeleteEmployeeResponse Delete(DeleteEmployeeRequest request)
+        public async Task<DeleteEmployeeResponse> DeleteAsync(DeleteEmployeeRequest request)
         {
-            return _employeeService.Delete(request);
+            return await _employeeService.DeleteAsync(request);
         }
 
         [HttpGet]
-        public List<GetAllEmployeeResponse> GetAll()
+        public async Task<List<GetAllEmployeeResponse>> GetAllAsync()
         {
-            return _employeeService.GetAll();
+            return await _employeeService.GetAllAsync();
         }
 
         [HttpGet("{id}")]
-        public GetByIdEmployeeResponse GetById(int id)
+        public async Task<GetByIdEmployeeResponse> GetByIdAsync(int id)
         {
-            return _employeeService.GetById(id);
+            return await _employeeService.GetByIdAsync(id);
         }
     }
 }

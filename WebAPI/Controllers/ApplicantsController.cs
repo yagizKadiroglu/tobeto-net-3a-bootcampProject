@@ -18,33 +18,33 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public CreateApplicantResponse Add(CreateApplicantRequest request)
+        public async Task<CreateApplicantResponse> AddAsync(CreateApplicantRequest request)
         {
-            return  _applicantService.Add(request);
+            return  await _applicantService.AddAsync(request);
         }
 
         [HttpPut]
-        public UpdateApplicantResponse Update(UpdateApplicantRequest request)
+        public async Task<UpdateApplicantResponse> UpdateAsync(UpdateApplicantRequest request)
         {
-            return _applicantService.Update(request);
+            return await _applicantService.UpdateAsync(request);
         }
 
         [HttpDelete]
-        public DeleteApplicantResponse Delete(DeleteApplicantRequest request)
+        public async Task<DeleteApplicantResponse> DeleteAsync(DeleteApplicantRequest request)
         {
-            return _applicantService.Delete(request);
+            return await _applicantService.DeleteAsync(request);
         }
 
         [HttpGet]
-        public List<GetAllApplicantResponse> GetAll()
+        public async Task<List<GetAllApplicantResponse>> GetAllAsync()
         {
-            return  _applicantService.GetAll();
+            return await  _applicantService.GetAllAsync();
         }
 
         [HttpGet("{id}")]
-        public GetByIdApplicantResponse GetById(int id)
+        public async Task<GetByIdApplicantResponse> GetByIdAsync(int id)
         {
-            return _applicantService.GetById(id);
+            return await _applicantService.GetByIdAsync(id);
         }
     }
 }

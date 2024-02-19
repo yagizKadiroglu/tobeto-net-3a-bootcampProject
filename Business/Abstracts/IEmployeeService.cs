@@ -5,10 +5,10 @@ namespace Business.Abstracts;
 
 public interface IEmployeeService
 {
-    CreateEmployeeResponse Add(CreateEmployeeRequest request);
-    DeleteEmployeeResponse Delete(DeleteEmployeeRequest request);
-    UpdateEmployeeResponse Update(UpdateEmployeeRequest request);
-    List<GetAllEmployeeResponse> GetAll();
-    GetByIdEmployeeResponse GetById(int id);
+    Task<CreateEmployeeResponse> AddAsync(CreateEmployeeRequest request);
+    Task<DeleteEmployeeResponse> DeleteAsync(DeleteEmployeeRequest request);
+    Task<UpdateEmployeeResponse> UpdateAsync(UpdateEmployeeRequest request);
+    Task<List<GetAllEmployeeResponse>> GetAllAsync();
+    Task<GetByIdEmployeeResponse> GetByIdAsync(int id);
 
 }

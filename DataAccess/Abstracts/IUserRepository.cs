@@ -3,6 +3,6 @@ using Entities;
 
 namespace DataAccess.Abstracts;
 
-public interface IUserRepository : IRepository<User, int>
+public interface IUserRepository : IRepository<User, int>, IAsyncRepository<User, int>
 {
 }

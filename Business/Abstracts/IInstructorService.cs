@@ -5,10 +5,10 @@ namespace Business.Abstracts;
 
 public interface IInstructorService
 {
-    CreateInstructorResponse Add(CreateInstructorRequest request);
-    DeleteInstructorResponse Delete(DeleteInstructorRequest request);
-    UpdateInstructorResponse Update(UpdateInstructorRequest request);
-    List<GetAllInstructorResponse> GetAll();
-    GetByIdInstructorResponse GetById(int id);
+    Task<CreateInstructorResponse> AddAsync(CreateInstructorRequest request);
+    Task<DeleteInstructorResponse> DeleteAsync(DeleteInstructorRequest request);
+    Task<UpdateInstructorResponse> UpdateAsync(UpdateInstructorRequest request);
+    Task<List<GetAllInstructorResponse>> GetAllAsync();
+    Task<GetByIdInstructorResponse> GetByIdAsync(int id);
 
 }

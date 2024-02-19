@@ -15,7 +15,7 @@ public class ApplicantManager : IApplicantService
         _applicantRepository = applicantRepository;
     }
 
-    public CreateApplicantResponse Add(CreateApplicantRequest request)
+    public async Task<CreateApplicantResponse> AddAsync(CreateApplicantRequest request)
     {
         Applicant applicant = new();
         applicant.Username = request.Username;
@@ -27,7 +27,7 @@ public class ApplicantManager : IApplicantService
         applicant.Password = request.Password;
         applicant.About = request.About;
 
-        _applicantRepository.Add(applicant);
+        await _applicantRepository.AddAsync(applicant);
 
         CreateApplicantResponse applicantResponse = new();
         applicantResponse.Username = applicant.Username;
@@ -44,11 +44,11 @@ public class ApplicantManager : IApplicantService
 
     }
 
-    public DeleteApplicantResponse Delete(DeleteApplicantRequest request)
+    public async Task<DeleteApplicantResponse> DeleteAsync(DeleteApplicantRequest request)
     {
-       var applicant = _applicantRepository.Get(a => a.Id == request.Id);
+       var applicant = await _applicantRepository.GetAsync(a => a.Id == request.Id);
 
-        _applicantRepository.Delete(applicant);
+        await _applicantRepository.DeleteAsync(applicant);
         
         DeleteApplicantResponse deleteApplicantResponse = new();
         deleteApplicantResponse.Username = applicant.Username;
@@ -58,10 +58,10 @@ public class ApplicantManager : IApplicantService
         return deleteApplicantResponse;
     }
 
-    public List<GetAllApplicantResponse> GetAll()
+    public async Task<List<GetAllApplicantResponse>> GetAllAsync()
     {
         List<GetAllApplicantResponse> applicantResponses = new();
-        foreach (var item in _applicantRepository.GetAll())
+        foreach (var item in await _applicantRepository.GetAllAsync())
         {
             GetAllApplicantResponse result = new();
             result.Id = item.Id;
@@ -80,9 +80,9 @@ public class ApplicantManager : IApplicantService
 
     }
 
-    public GetByIdApplicantResponse GetById(int id)
+    public async Task<GetByIdApplicantResponse> GetByIdAsync(int id)
     {
-        var result =_applicantRepository.Get(a => a.Id == id);
+        var result = await _applicantRepository.GetAsync(a => a.Id == id);
 
         GetByIdApplicantResponse getByIdApplicantResponse = new();
         getByIdApplicantResponse.Id = result.Id;
@@ -98,9 +98,9 @@ public class ApplicantManager : IApplicantService
         return getByIdApplicantResponse;
     }
 
-    public UpdateApplicantResponse Update(UpdateApplicantRequest request)
+    public async Task<UpdateApplicantResponse> UpdateAsync(UpdateApplicantRequest request)
     {
-        var result = _applicantRepository.Get(a => a.Id == request.Id);
+        var result = await _applicantRepository.GetAsync(a => a.Id == request.Id);
         result.Id = request.Id;
         result.Username = request.Username;
         result.FirstName = request.FirstName;
@@ -111,7 +111,7 @@ public class ApplicantManager : IApplicantService
         result.Password = request.Password;
         result.About = request.About;
 
-        _applicantRepository.Update(result);
+        await _applicantRepository.UpdateAsync(result);
 
         UpdateApplicantResponse applicantResponse = new();
         applicantResponse.Username = result.Username;

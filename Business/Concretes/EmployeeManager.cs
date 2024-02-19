@@ -15,7 +15,7 @@ public class EmployeeManager : IEmployeeService
         _employeeRepository = employeeRepository;
     }
 
-    public CreateEmployeeResponse Add(CreateEmployeeRequest request)
+    public async Task<CreateEmployeeResponse> AddAsync(CreateEmployeeRequest request)
     {
         Employee employee = new();
         employee.Username = request.Username;
@@ -27,7 +27,7 @@ public class EmployeeManager : IEmployeeService
         employee.Password = request.Password;
         employee.Position = request.Position;
 
-        _employeeRepository.Add(employee);
+        await _employeeRepository.AddAsync(employee);
 
         CreateEmployeeResponse employeeResponse = new();
         employeeResponse.Username = employee.Username;
@@ -44,11 +44,11 @@ public class EmployeeManager : IEmployeeService
 
     }
 
-    public DeleteEmployeeResponse Delete(DeleteEmployeeRequest request)
+    public async Task<DeleteEmployeeResponse> DeleteAsync(DeleteEmployeeRequest request)
     {
-        var employee = _employeeRepository.Get(a => a.Id == request.Id);
+        var employee = await _employeeRepository.GetAsync(a => a.Id == request.Id);
 
-        _employeeRepository.Delete(employee);
+        await _employeeRepository.DeleteAsync(employee);
 
         DeleteEmployeeResponse deleteEmployeeResponse = new();
         deleteEmployeeResponse.Username = employee.Username;
@@ -58,10 +58,10 @@ public class EmployeeManager : IEmployeeService
         return deleteEmployeeResponse;
     }
 
-    public List<GetAllEmployeeResponse> GetAll()
+    public async Task<List<GetAllEmployeeResponse>> GetAllAsync()
     {
         List<GetAllEmployeeResponse> employeeResponses = new();
-        foreach (var item in _employeeRepository.GetAll())
+        foreach (var item in await _employeeRepository.GetAllAsync())
         {
             GetAllEmployeeResponse result = new();
             result.Id = item.Id;
@@ -80,9 +80,9 @@ public class EmployeeManager : IEmployeeService
 
     }
 
-    public GetByIdEmployeeResponse GetById(int id)
+    public async Task<GetByIdEmployeeResponse> GetByIdAsync(int id)
     {
-        var result = _employeeRepository.Get(a => a.Id == id);
+        var result = await _employeeRepository.GetAsync(a => a.Id == id);
 
         GetByIdEmployeeResponse getByIdEmployeeResponse = new();
         getByIdEmployeeResponse.Id = result.Id;
@@ -98,9 +98,9 @@ public class EmployeeManager : IEmployeeService
         return getByIdEmployeeResponse;
     }
 
-    public UpdateEmployeeResponse Update(UpdateEmployeeRequest request)
+    public async Task<UpdateEmployeeResponse> UpdateAsync(UpdateEmployeeRequest request)
     {
-        var result = _employeeRepository.Get(a => a.Id == request.Id);
+        var result = await _employeeRepository.GetAsync(a => a.Id == request.Id);
         result.Id = request.Id;
         result.Username = request.Username;
         result.FirstName = request.FirstName;
@@ -111,7 +111,7 @@ public class EmployeeManager : IEmployeeService
         result.Password = request.Password;
         result.Position = request.Position;
 
-        _employeeRepository.Update(result);
+        await _employeeRepository.UpdateAsync(result);
 
         UpdateEmployeeResponse employeeResponse = new();
         employeeResponse.Username = result.Username;

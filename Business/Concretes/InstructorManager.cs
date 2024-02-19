@@ -15,7 +15,7 @@ public class InstructorManager : IInstructorService
         _instructorRepository = instructorRepository;
     }
 
-    public CreateInstructorResponse Add(CreateInstructorRequest request)
+    public async Task<CreateInstructorResponse> AddAsync(CreateInstructorRequest request)
     {
         Instructor instructor = new();
         instructor.Username = request.Username;
@@ -27,7 +27,7 @@ public class InstructorManager : IInstructorService
         instructor.Password = request.Password;
         instructor.CompanyName = request.CompanyName;
 
-        _instructorRepository.Add(instructor);
+        await _instructorRepository.AddAsync(instructor);
 
         CreateInstructorResponse instructorResponse = new();
         instructorResponse.Username = instructor.Username;
@@ -44,11 +44,11 @@ public class InstructorManager : IInstructorService
 
     }
 
-    public DeleteInstructorResponse Delete(DeleteInstructorRequest request)
+    public async Task<DeleteInstructorResponse> DeleteAsync(DeleteInstructorRequest request)
     {
-        var instructor = _instructorRepository.Get(a => a.Id == request.Id);
+        var instructor = await _instructorRepository.GetAsync(a => a.Id == request.Id);
 
-        _instructorRepository.Delete(instructor);
+        await _instructorRepository.DeleteAsync(instructor);
 
         DeleteInstructorResponse deleteInstructorResponse = new();
         deleteInstructorResponse.Username = instructor.Username;
@@ -58,10 +58,10 @@ public class InstructorManager : IInstructorService
         return deleteInstructorResponse;
     }
 
-    public List<GetAllInstructorResponse> GetAll()
+    public async Task<List<GetAllInstructorResponse>> GetAllAsync()
     {
         List<GetAllInstructorResponse> instructorResponses = new();
-        foreach (var item in _instructorRepository.GetAll())
+        foreach (var item in await _instructorRepository.GetAllAsync())
         {
             GetAllInstructorResponse result = new();
             result.Id = item.Id;
@@ -80,9 +80,9 @@ public class InstructorManager : IInstructorService
 
     }
 
-    public GetByIdInstructorResponse GetById(int id)
+    public async Task<GetByIdInstructorResponse> GetByIdAsync(int id)
     {
-        var result = _instructorRepository.Get(a => a.Id == id);
+        var result = await _instructorRepository.GetAsync(a => a.Id == id);
 
         GetByIdInstructorResponse getByIdInstructorResponse = new();
         getByIdInstructorResponse.Id = result.Id;
@@ -98,9 +98,9 @@ public class InstructorManager : IInstructorService
         return getByIdInstructorResponse;
     }
 
-    public UpdateInstructorResponse Update(UpdateInstructorRequest request)
+    public async Task<UpdateInstructorResponse> UpdateAsync(UpdateInstructorRequest request)
     {
-        var result = _instructorRepository.Get(a => a.Id == request.Id);
+        var result = await _instructorRepository.GetAsync(a => a.Id == request.Id);
         result.Id = request.Id;
         result.Username = request.Username;
         result.FirstName = request.FirstName;
@@ -111,7 +111,7 @@ public class InstructorManager : IInstructorService
         result.Password = request.Password;
         result.CompanyName = request.CompanyName;
 
-        _instructorRepository.Update(result);
+        await _instructorRepository.UpdateAsync(result);
 
         UpdateInstructorResponse instructorResponse = new();
         instructorResponse.Username = result.Username;
