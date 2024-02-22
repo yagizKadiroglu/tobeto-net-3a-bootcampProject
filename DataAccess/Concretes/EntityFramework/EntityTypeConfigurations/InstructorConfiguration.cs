@@ -12,5 +12,7 @@ public class InstructorConfiguration : IEntityTypeConfiguration<Instructor>
 
 
         builder.Property(x => x.CompanyName).HasColumnName("CompanyName");
+
+        builder.HasMany(x => x.Bootcamps);
     }
 }

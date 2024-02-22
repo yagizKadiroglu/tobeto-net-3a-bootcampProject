@@ -20,6 +20,10 @@ public static class DataAccessServiceRegistration
         services.AddScoped<IApplicantRepository, ApplicantRepository>();
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IInstructorRepository, InstructorRepository>();
+        services.AddScoped<IApplicationRepository, ApplicationRepository>();
+        services.AddScoped<IApplicationStateRepository, ApplicationStateRepository>();
+        services.AddScoped<IBootcampRepository, BootcampRepository>();
+        services.AddScoped<IBootcampStateRepository, BootcampStateRepository>();
 
         return services;
     }

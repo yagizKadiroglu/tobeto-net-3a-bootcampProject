@@ -1,6 +1,7 @@
 ﻿using Business.Abstracts;
 using Business.Requests.Applicants;
 using Business.Responses.Applicants;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,31 +19,31 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<CreateApplicantResponse> AddAsync(CreateApplicantRequest request)
+        public async Task<IDataResult<CreateApplicantResponse>> AddAsync(CreateApplicantRequest request)
         {
             return  await _applicantService.AddAsync(request);
         }
 
         [HttpPut]
-        public async Task<UpdateApplicantResponse> UpdateAsync(UpdateApplicantRequest request)
+        public async Task<IDataResult<UpdateApplicantResponse>> UpdateAsync(UpdateApplicantRequest request)
         {
             return await _applicantService.UpdateAsync(request);
         }
 
         [HttpDelete]
-        public async Task<DeleteApplicantResponse> DeleteAsync(DeleteApplicantRequest request)
+        public async Task<IDataResult<DeleteApplicantResponse>> DeleteAsync(DeleteApplicantRequest request)
         {
             return await _applicantService.DeleteAsync(request);
         }
 
         [HttpGet]
-        public async Task<List<GetAllApplicantResponse>> GetAllAsync()
+        public async Task<IDataResult<List<GetAllApplicantResponse>>> GetAllAsync()
         {
             return await  _applicantService.GetAllAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<GetByIdApplicantResponse> GetByIdAsync(int id)
+        public async Task<IDataResult<GetByIdApplicantResponse>> GetByIdAsync(int id)
         {
             return await _applicantService.GetByIdAsync(id);
         }
