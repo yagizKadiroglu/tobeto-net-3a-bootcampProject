@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BootcampStatesController : ControllerBase
+    public class BootcampStatesController : BaseController
     {
         private readonly IBootcampStateService _bootcampStateService;
 
@@ -19,33 +19,34 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IDataResult<CreateBootcampStateResponse>> AddAsync(CreateBootcampStateRequest request)
+        public async Task<IActionResult> AddAsync(CreateBootcampStateRequest request)
         {
-            return await _bootcampStateService.AddAsync(request);
+
+            return HandleDataResult(await _bootcampStateService.AddAsync(request));
         }
 
         [HttpPut]
-        public async Task<IDataResult<UpdateBootcampStateResponse>> UpdateAsync(UpdateBootcampStateRequest request)
+        public async Task<IActionResult> UpdateAsync(UpdateBootcampStateRequest request)
         {
-            return await _bootcampStateService.UpdateAsync(request);
+            return HandleDataResult(await _bootcampStateService.UpdateAsync(request));
         }
 
         [HttpDelete]
-        public async Task<IDataResult<DeleteBootcampStateResponse>> DeleteAsync(DeleteBootcampStateRequest request)
+        public async Task<IActionResult> DeleteAsync(DeleteBootcampStateRequest request)
         {
-            return await _bootcampStateService.DeleteAsync(request);
+            return HandleDataResult(await _bootcampStateService.DeleteAsync(request));
         }
 
         [HttpGet]
-        public async Task<IDataResult<List<GetAllBootcampStateResponse>>> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
-            return await _bootcampStateService.GetAllAsync();
+            return HandleDataResult(await _bootcampStateService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<IDataResult<GetByIdBootcampStateResponse>> GetByIdAsync(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return await _bootcampStateService.GetByIdAsync(id);
+            return HandleDataResult(await _bootcampStateService.GetByIdAsync(id));
         }
     }
 }

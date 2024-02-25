@@ -18,6 +18,8 @@ public static class BusinessServiceRegistration
         services.AddScoped<IApplicationStateService, ApplicationStateManager>();
         services.AddScoped<IBootcampService, BootcampManager>();
         services.AddScoped<IBootcampStateService, BootcampStateManager>();
+        services.AddScoped<IUserImageService, UserImageManager>();
+
 
         return services;
     }

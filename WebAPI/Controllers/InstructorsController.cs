@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InstructorsController : ControllerBase
+    public class InstructorsController : BaseController
     {
         private readonly IInstructorService _instructorService;
 
@@ -19,33 +19,33 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IDataResult<CreateInstructorResponse>> AddAsync(CreateInstructorRequest request)
+        public async Task<IActionResult> AddAsync(CreateInstructorRequest request)
         {
-            return await _instructorService.AddAsync(request);
+            return HandleDataResult(await _instructorService.AddAsync(request));
         }
 
         [HttpPut]
-        public async Task<IDataResult<UpdateInstructorResponse>> UpdateAsync(UpdateInstructorRequest request)
+        public async Task<IActionResult> UpdateAsync(UpdateInstructorRequest request)
         {
-            return await _instructorService.UpdateAsync(request);
+            return HandleDataResult(await _instructorService.UpdateAsync(request));
         }
 
         [HttpDelete]
-        public async Task<IDataResult<DeleteInstructorResponse>> DeleteAsync(DeleteInstructorRequest request)
+        public async Task<IActionResult> DeleteAsync(DeleteInstructorRequest request)
         {
-            return await _instructorService.DeleteAsync(request);
+            return HandleDataResult(await _instructorService.DeleteAsync(request));
         }
 
         [HttpGet]
-        public async Task<IDataResult<List<GetAllInstructorResponse>>> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
-            return await _instructorService.GetAllAsync();
+            return HandleDataResult(await _instructorService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<IDataResult<GetByIdInstructorResponse>> GetByIdAsync(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return await _instructorService.GetByIdAsync(id);
+            return HandleDataResult(await _instructorService.GetByIdAsync(id));
         }
     }
 }

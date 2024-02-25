@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeesController : ControllerBase
+    public class EmployeesController : BaseController
     {
         private readonly IEmployeeService _employeeService;
 
@@ -19,33 +19,33 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IDataResult<CreateEmployeeResponse>> AddAsync(CreateEmployeeRequest request)
+        public async Task<IActionResult> AddAsync(CreateEmployeeRequest request)
         {
-            return await _employeeService.AddAsync(request);
+            return HandleDataResult(await _employeeService.AddAsync(request));
         }
 
         [HttpPut]
-        public async Task<IDataResult<UpdateEmployeeResponse>> UpdateAsync(UpdateEmployeeRequest request)
+        public async Task<IActionResult> UpdateAsync(UpdateEmployeeRequest request)
         {
-            return await _employeeService.UpdateAsync(request);
+            return HandleDataResult(await _employeeService.UpdateAsync(request));
         }
 
         [HttpDelete]
-        public async Task<IDataResult<DeleteEmployeeResponse>> DeleteAsync(DeleteEmployeeRequest request)
+        public async Task<IActionResult> DeleteAsync(DeleteEmployeeRequest request)
         {
-            return await _employeeService.DeleteAsync(request);
+            return HandleDataResult(await _employeeService.DeleteAsync(request));
         }
 
         [HttpGet]
-        public async Task<IDataResult<List<GetAllEmployeeResponse>>> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
-            return await _employeeService.GetAllAsync();
+            return HandleDataResult(await _employeeService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<IDataResult<GetByIdEmployeeResponse>> GetByIdAsync(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return await _employeeService.GetByIdAsync(id);
+            return HandleDataResult(await _employeeService.GetByIdAsync(id));
         }
     }
 }
