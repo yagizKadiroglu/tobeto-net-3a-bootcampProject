@@ -2,6 +2,7 @@
 using Business.Abstracts;
 using Business.Requests.Applicants;
 using Business.Responses.Applicants;
+using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities;
@@ -31,6 +32,8 @@ public class ApplicantManager : IApplicantService
 
     public async Task<IDataResult<DeleteApplicantResponse>> DeleteAsync(DeleteApplicantRequest request)
     {
+       await IsDeletedCheck(request.Id);
+
        var applicant = await _applicantRepository.GetAsync(a => a.Id == request.Id);
 
         await _applicantRepository.DeleteAsync(applicant);
@@ -65,5 +68,13 @@ public class ApplicantManager : IApplicantService
 
         UpdateApplicantResponse applicantResponse = _mapper.Map<UpdateApplicantResponse>(result);
         return new SuccessDataResult<UpdateApplicantResponse>(applicantResponse);
+    }
+
+    private async Task IsDeletedCheck(int id)
+    {
+       var isDelete = await _applicantRepository.GetAsync(a => a.Id == id);
+
+        if (isDelete is null) throw new BusinessException("applicant is not exist");
+
     }
 }
