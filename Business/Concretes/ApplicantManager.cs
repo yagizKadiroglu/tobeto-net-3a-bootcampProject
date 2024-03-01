@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
+using Business.Constants;
 using Business.Requests.Applicants;
 using Business.Responses.Applicants;
+using Business.Rules;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -13,11 +15,13 @@ public class ApplicantManager : IApplicantService
 {
     private readonly IApplicantRepository _applicantRepository;
     private readonly IMapper _mapper;
+    private readonly ApllicantBusinessRules _rules;
 
-    public ApplicantManager(IApplicantRepository applicantRepository, IMapper mapper)
+    public ApplicantManager(IApplicantRepository applicantRepository, IMapper mapper, ApllicantBusinessRules rules)
     {
         _applicantRepository = applicantRepository;
         _mapper = mapper;
+        _rules = rules;
     }
 
     public async Task<IDataResult<CreateApplicantResponse>> AddAsync(CreateApplicantRequest request)
@@ -26,13 +30,13 @@ public class ApplicantManager : IApplicantService
         await _applicantRepository.AddAsync(applicant);
 
         CreateApplicantResponse response = _mapper.Map<CreateApplicantResponse>(applicant);
-        return new SuccessDataResult<CreateApplicantResponse>(response);
+        return new SuccessDataResult<CreateApplicantResponse>(response,ApplicantMessage.ApplicantAdded);
 
     }
 
     public async Task<IDataResult<DeleteApplicantResponse>> DeleteAsync(DeleteApplicantRequest request)
     {
-       await IsDeletedCheck(request.Id);
+       await _rules.IsDeletedCheck(request.Id);
 
        var applicant = await _applicantRepository.GetAsync(a => a.Id == request.Id);
 
@@ -68,13 +72,5 @@ public class ApplicantManager : IApplicantService
 
         UpdateApplicantResponse applicantResponse = _mapper.Map<UpdateApplicantResponse>(result);
         return new SuccessDataResult<UpdateApplicantResponse>(applicantResponse);
-    }
-
-    private async Task IsDeletedCheck(int id)
-    {
-       var isDelete = await _applicantRepository.GetAsync(a => a.Id == id);
-
-        if (isDelete is null) throw new BusinessException("applicant is not exist");
-
     }
 }

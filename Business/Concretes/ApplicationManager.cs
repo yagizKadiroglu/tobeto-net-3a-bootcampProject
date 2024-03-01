@@ -2,6 +2,7 @@
 using Business.Abstracts;
 using Business.Requests.Applications;
 using Business.Responses.Applications;
+using Business.Rules;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities;
@@ -13,15 +14,19 @@ public class ApplicationManager : IApplicationService
 {
     private readonly IApplicationRepository _applicationRepository;
     private readonly IMapper _mapper;
+    private readonly ApplicationBusinessRules _rules;
 
-    public ApplicationManager(IApplicationRepository applicationRepository, IMapper mapper)
+    public ApplicationManager(IApplicationRepository applicationRepository, IMapper mapper, ApplicationBusinessRules rules)
     {
         _applicationRepository = applicationRepository;
         _mapper = mapper;
+        _rules = rules;
     }
 
     public async Task<IDataResult<CreateApplicationResponse>> AddAsync(CreateApplicationRequest request)
     {
+        await _rules.BlackListCheck(request.ApplicantId);
+
         Application application = _mapper.Map<Application>(request);
         await _applicationRepository.AddAsync(application);
 

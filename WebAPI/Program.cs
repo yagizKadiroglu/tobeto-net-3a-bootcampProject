@@ -25,6 +25,13 @@ if (app.Environment.IsDevelopment())
     app.ConfigureCustomExceptionMiddleware();
 
 }
+if (app.Environment.IsProduction())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.ConfigureCustomExceptionMiddleware();
+
+}
 
 app.UseAuthorization();
 

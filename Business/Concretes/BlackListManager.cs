@@ -50,6 +50,14 @@ public class BlackListManager : IBlackListService
         return new SuccessDataResult<List<GetAllBlackListResponse>>(responses);
     }
 
+    public async Task<IDataResult<GetByIdBlackListResponse>> GetByApplicantIdAsync(int id)
+    {
+        var result = await _blackListRepository.GetAsync(a => a.ApplicantId == id);
+
+        GetByIdBlackListResponse getByIdBlackListResponse = _mapper.Map<GetByIdBlackListResponse>(result);
+        return new SuccessDataResult<GetByIdBlackListResponse>(getByIdBlackListResponse);
+    }
+
     public async Task<IDataResult<GetByIdBlackListResponse>> GetByIdAsync(int id)
     {
         var result = await _blackListRepository.GetAsync(a => a.Id == id);
