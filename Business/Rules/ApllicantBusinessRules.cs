@@ -1,4 +1,5 @@
-﻿using Core.CrossCuttingConcerns;
+﻿using Business.Constants;
+using Core.CrossCuttingConcerns.Rules;
 using Core.Exceptions.Types;
 using DataAccess.Abstracts;
 
@@ -17,7 +18,17 @@ public class ApllicantBusinessRules:BaseBusinessRules
     {
         var isDelete = await _applicantRepository.GetAsync(a => a.Id == id);
 
-        if (isDelete is null) throw new BusinessException("applicant is not exist");
+        if (isDelete is null) throw new BusinessException(ApplicantBusinessRuleMessage.IsDeletedCheck);
+    }
 
+    public async Task IsApplicantExist(string userName,string nationalIdentity,string email)
+    {
+        var isApplicantExist = await _applicantRepository.GetAsync(a => 
+            a.Username == userName || 
+            a.NationalIdentity == nationalIdentity ||
+            a.Email == email
+            );
+
+        if (isApplicantExist is not null) throw new BusinessException(ApplicantBusinessRuleMessage.IsApplicantExist);
     }
 }

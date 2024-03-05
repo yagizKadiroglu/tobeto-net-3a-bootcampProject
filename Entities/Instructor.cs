@@ -10,4 +10,17 @@ public class Instructor:User
     {
         Bootcamps = new HashSet<Bootcamp>();
     }
+
+    public Instructor(int id, string username, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, string password, string companyName):this()
+    {
+        Id = id;
+        Username = username;
+        FirstName = firstName;
+        LastName = lastName;
+        DateOfBirth = dateOfBirth;
+        NationalIdentity = nationalIdentity;
+        Email = email;
+        Password = password;
+        CompanyName = companyName;
+    }
 }

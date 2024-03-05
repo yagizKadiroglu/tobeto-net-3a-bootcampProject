@@ -21,11 +21,11 @@ public class Bootcamp : BaseEntity<int>
         Applications = new HashSet<Application>();
     }
 
-    public Bootcamp(int id,string name, int ınstructorId, int bootcampStateId, DateTime starDate, DateTime endDate):this()
+    public Bootcamp(int id,string name, int instructorId, int bootcampStateId, DateTime starDate, DateTime endDate):this()
     {
         Id = id;
         Name = name;
-        InstructorId = ınstructorId;
+        InstructorId = instructorId;
         BootcampStateId = bootcampStateId;
         StarDate = starDate;
         EndDate = endDate;

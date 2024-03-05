@@ -1,6 +1,6 @@
 ﻿using Business.Abstracts;
 using Business.Concretes;
-using Core.CrossCuttingConcerns;
+using Core.CrossCuttingConcerns.Rules;
 using Core.Extensions.RegisterAssemblyTypes;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

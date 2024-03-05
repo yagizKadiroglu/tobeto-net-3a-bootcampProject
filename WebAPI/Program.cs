@@ -1,6 +1,9 @@
 using DataAccess;
 using Business;
 using Core.Exceptions.Extensions;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using Business.DependencyResolvers.Autofac;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +15,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddDataAccessServices(builder.Configuration);
 builder.Services.AddBusinessServices();
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(builder =>
+{
+    builder.RegisterModule(new AutofacBusinessModule());
+});
 
 var app = builder.Build();
 
@@ -22,7 +29,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.ConfigureCustomExceptionMiddleware();
+    //app.ConfigureCustomExceptionMiddleware();
 
 }
 if (app.Environment.IsProduction())

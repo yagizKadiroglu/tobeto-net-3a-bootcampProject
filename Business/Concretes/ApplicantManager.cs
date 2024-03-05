@@ -4,6 +4,8 @@ using Business.Constants;
 using Business.Requests.Applicants;
 using Business.Responses.Applicants;
 using Business.Rules;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Exceptions.Types;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -26,6 +28,9 @@ public class ApplicantManager : IApplicantService
 
     public async Task<IDataResult<CreateApplicantResponse>> AddAsync(CreateApplicantRequest request)
     {
+
+        await _rules.IsApplicantExist(request.Username,request.NationalIdentity,request.Email);
+
         Applicant applicant = _mapper.Map<Applicant>(request);
         await _applicantRepository.AddAsync(applicant);
 
@@ -46,6 +51,7 @@ public class ApplicantManager : IApplicantService
         return new SuccessDataResult<DeleteApplicantResponse>(deleteApplicantResponse);
     }
 
+    [LogAspect(typeof(MssqlLogger))]
     public async Task<IDataResult<List<GetAllApplicantResponse>>> GetAllAsync()
     {
         List<Applicant> applicants = await _applicantRepository.GetAllAsync();
@@ -64,6 +70,9 @@ public class ApplicantManager : IApplicantService
 
     public async Task<IDataResult<UpdateApplicantResponse>> UpdateAsync(UpdateApplicantRequest request)
     {
+        await _rules.IsApplicantExist(request.Username, request.NationalIdentity, request.Email);
+
+
         var result = await _applicantRepository.GetAsync(a => a.Id == request.Id);
 
         _mapper.Map(request, result);
