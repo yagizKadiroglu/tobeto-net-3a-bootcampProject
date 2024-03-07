@@ -1,5 +1,7 @@
 ﻿using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+using Core.Utilities.IoC;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Core;
 using Serilog.Sinks.MSSqlServer;
@@ -11,10 +13,8 @@ public class MssqlLogger : LoggerServiceBase
 {
     public MssqlLogger()
     {
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .Build();
-        
+        var configuration = ServiceTool.ServiceProvider.GetRequiredService<IConfiguration>();
+
         MssqlConfiguration logConfiguration = configuration.GetSection("SerilogConfigurations:MssqlConfiguration")
             .Get<MssqlConfiguration>() ?? throw new Exception("");
         MSSqlServerSinkOptions sinkOptions = new() { TableName = logConfiguration.TableName, AutoCreateSqlTable = logConfiguration.AutoCreateSqlTable };

@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using Core.Utilities.Security.Entities;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;

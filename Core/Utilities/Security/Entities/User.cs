@@ -1,6 +1,6 @@
 ﻿using Core.Entities;
 
-namespace Entities;
+namespace Core.Utilities.Security.Entities;
 
 public class User:BaseEntity<int>
 {
@@ -10,16 +10,15 @@ public class User:BaseEntity<int>
     public DateTime DateOfBirth { get; set; }
     public string NationalIdentity { get; set; }
     public string Email { get; set; }
-    public string Password { get; set; }
-
-    public ICollection<UserImage> UserImages { get; set; }
+    public byte[] PasswordHash { get; set; }
+    public byte[] PasswordSalt { get; set; }
 
     public User()
     {
-        UserImages = new HashSet<UserImage>();
+            
     }
 
-    public User(int id,string username, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, string password)
+    public User(int id,string username, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, byte[] passwordHash, byte[] passwordSalt)
     {
         Id = id;
         Username = username;
@@ -28,6 +27,7 @@ public class User:BaseEntity<int>
         DateOfBirth = dateOfBirth;
         NationalIdentity = nationalIdentity;
         Email = email;
-        Password = password;
+        PasswordHash = passwordHash;
+        PasswordSalt = passwordSalt;
     }
 }

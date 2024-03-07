@@ -4,6 +4,8 @@ using Core.Exceptions.Extensions;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using Business.DependencyResolvers.Autofac;
+using Core.Utilities.IoC;
+using Core.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,12 +17,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddDataAccessServices(builder.Configuration);
 builder.Services.AddBusinessServices();
+builder.Services.AddCoreModule();
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(builder =>
 {
     builder.RegisterModule(new AutofacBusinessModule());
 });
 
 var app = builder.Build();
+
+ServiceTool.ServiceProvider = app.Services;
+
 
 
 // Configure the HTTP request pipeline.

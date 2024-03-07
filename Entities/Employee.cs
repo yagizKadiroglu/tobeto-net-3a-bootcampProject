@@ -1,4 +1,6 @@
-﻿namespace Entities;
+﻿using Core.Utilities.Security.Entities;
+
+namespace Entities;
 
 public class Employee : User
 {
@@ -9,7 +11,7 @@ public class Employee : User
         
     }
 
-    public Employee(int id, string username, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, string password, string position) : this()
+    public Employee(int id, string username, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, byte[] passwordHash, byte[] passwordSalt, string position) : this()
     {
         Id = id;
         Username = username;
@@ -18,7 +20,8 @@ public class Employee : User
         DateOfBirth = dateOfBirth;
         NationalIdentity = nationalIdentity;
         Email = email;
-        Password = password;
+        PasswordHash = passwordHash;
+        PasswordSalt = passwordSalt;
         Position = position;
     }
 }

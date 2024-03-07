@@ -1,4 +1,6 @@
-﻿namespace Entities;
+﻿using Core.Utilities.Security.Entities;
+
+namespace Entities;
 
 public class Instructor:User
 {
@@ -11,7 +13,7 @@ public class Instructor:User
         Bootcamps = new HashSet<Bootcamp>();
     }
 
-    public Instructor(int id, string username, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, string password, string companyName):this()
+    public Instructor(int id, string username, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, byte[] passwordHash, byte[] passwordSalt, string companyName):this()
     {
         Id = id;
         Username = username;
@@ -20,7 +22,8 @@ public class Instructor:User
         DateOfBirth = dateOfBirth;
         NationalIdentity = nationalIdentity;
         Email = email;
-        Password = password;
+        PasswordHash = passwordHash;
+        PasswordSalt = passwordSalt;
         CompanyName = companyName;
     }
 }

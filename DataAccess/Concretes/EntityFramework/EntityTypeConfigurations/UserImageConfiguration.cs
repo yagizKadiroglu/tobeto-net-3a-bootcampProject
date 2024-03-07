@@ -16,7 +16,6 @@ public class UserImageConfiguration : IEntityTypeConfiguration<UserImage>
         builder.Property(x => x.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(x => x.DeletedDate).HasColumnName("DeletedDate");
 
-        builder.HasOne(x => x.User);
 
     }
 }
