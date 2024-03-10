@@ -4,6 +4,7 @@ using DataAccess.Concretes.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240308101635_updateuser")]
+    partial class updateuser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,37 +24,6 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Core.Utilities.Security.Entities.OperationClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
-
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OperationClaims", (string)null);
-                });
 
             modelBuilder.Entity("Core.Utilities.Security.Entities.User", b =>
                 {
@@ -118,44 +90,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Users", (string)null);
 
                     b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("Core.Utilities.Security.Entities.UserOperationClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
-
-                    b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
-
-                    b.Property<int>("OperationClaimId")
-                        .HasColumnType("int")
-                        .HasColumnName("OperationClaimId");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OperationClaimId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserOperationClaims", (string)null);
                 });
 
             modelBuilder.Entity("Entities.Application", b =>
@@ -428,25 +362,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Instructors", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Utilities.Security.Entities.UserOperationClaim", b =>
-                {
-                    b.HasOne("Core.Utilities.Security.Entities.OperationClaim", "OperationClaim")
-                        .WithMany("UserOperationClaims")
-                        .HasForeignKey("OperationClaimId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Core.Utilities.Security.Entities.User", "User")
-                        .WithMany("UserOperationClaims")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("OperationClaim");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Entities.Application", b =>
                 {
                     b.HasOne("Entities.Applicant", "Applicant")
@@ -529,16 +444,6 @@ namespace DataAccess.Migrations
                         .HasForeignKey("Entities.Instructor", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Core.Utilities.Security.Entities.OperationClaim", b =>
-                {
-                    b.Navigation("UserOperationClaims");
-                });
-
-            modelBuilder.Entity("Core.Utilities.Security.Entities.User", b =>
-                {
-                    b.Navigation("UserOperationClaims");
                 });
 
             modelBuilder.Entity("Entities.ApplicationState", b =>

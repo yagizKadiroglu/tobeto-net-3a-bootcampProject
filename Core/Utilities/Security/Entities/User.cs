@@ -12,10 +12,12 @@ public class User:BaseEntity<int>
     public string Email { get; set; }
     public byte[] PasswordHash { get; set; }
     public byte[] PasswordSalt { get; set; }
+    public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; }
+
 
     public User()
     {
-            
+        UserOperationClaims = new HashSet<UserOperationClaim>();
     }
 
     public User(int id,string username, string firstName, string lastName, DateTime dateOfBirth, string nationalIdentity, string email, byte[] passwordHash, byte[] passwordSalt)

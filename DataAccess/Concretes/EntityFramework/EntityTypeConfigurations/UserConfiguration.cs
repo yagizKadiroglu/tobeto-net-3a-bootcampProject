@@ -23,5 +23,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(x => x.DeletedDate).HasColumnName("DeletedDate");
 
+        builder.HasMany(x => x.UserOperationClaims);
+
     }
 }
